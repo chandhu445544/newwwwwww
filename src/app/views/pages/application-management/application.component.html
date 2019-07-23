@@ -1,0 +1,14 @@
+<div class="form-group">
+<input type ="text" class="form-control size" placeholder="Search your applications" [(ngModel)]="searchApplication" size="20"/>
+
+</div>
+
+<div *ngFor="let application of applicationData | keyvalue">
+    <div class="application-header"><p>{{application.key}}</p></div>
+    <div class="row">
+        <div class="col-sm-2" *ngFor="let image of application.value | applicationFilter:searchApplication">
+            <a href="{{image.applicationUrl}}" target="_blank"><img src="{{image.imageUrl}}" class="tn" width="200" height="160"></a>
+            <p>{{image.applicationName}}</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,455 @@
+<div class="example-action-buttons" align="right">
+  <button mat-button color="primary" (click)="accordion.openAll()">Expand All </button>
+  <button mat-button color="primary" (click)="accordion.closeAll()">Collapse All </button>
+</div>
+
+<mat-accordion class="example-headers-align" multi>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title style="font-weight: bold; font-size: 16px">Personal Information</mat-panel-title>
+      <mat-panel-description> </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+    <!--begin::Form-->
+    <form class="kt-form" [formGroup]="personalForm">
+      <div class="kt-portlet__body">
+        <div class="kt-form__section kt-form__section--first">
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Full Name:</label>
+            <div class="col-lg-4">
+              <label>{{accountDetail.suffix +" " + accountDetail.firstName +" " +accountDetail.middleName +" " + accountDetail.lastName}}</label>
+            </div>
+            <div class="col-lg-5">
+              <div class="example-header-image">
+                <img src="{{accountDetail.facialTokenImage?.url}}" height="{{accountDetail.facialTokenImage?.height}}"
+                  width="{{accountDetail.facialTokenImage?.width}}" alt="Image" class="mat-card-image">
+              </div>
+              <input type="file" (change)="onFileSelected($event)" style="display: none" #fileInput>
+              <button mat-button color="primary" (click)="fileInput.click()">Upload</button>
+
+            </div>
+          </div>
+
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Date of Birth:</label>
+            <div class="col-lg-4">
+              <mat-form-field>
+                <input matInput formControlName="dateOfBirth" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Primary Address</label>
+            <div class="col-lg-4" *ngIf="!editPrimaryAddress">
+              <p>{{accountDetail.primaryAddressLine1}} ,{{accountDetail.primaryAddressLine2}}</p>
+              <p>{{accountDetail.primaryCity}}, {{accountDetail.primaryState}}, {{accountDetail.primaryZipcode}}</p>
+            </div>
+            <div class="col-lg-4" *ngIf="editPrimaryAddress">
+              <div class="form-field-container">
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="AddressLine1" formControlName="primaryAddressLine1" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="AddressLine2" formControlName="primaryAddressLine2" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="AddressLine3" formControlName="primaryAddressLine3" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="City" formControlName="primaryCity" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="State" formControlName="primaryState" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="Country" formControlName="primaryCountry" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="Zipcode" formControlName="primaryZipcode" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="!editPrimaryAddress">
+              <button mat-button color="primary" (click)="changePrimaryAddress()">Change</button>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="editPrimaryAddress">
+              <button mat-button color="primary" (click)="savePersonalInfo()">Save</button>&nbsp;&nbsp;
+              <button mat-button color="primary" (click)="cancelPersonalInfo()">Cancel</button>
+            </div>
+          </div>
+
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Secondary Address</label>
+            <div class="col-lg-4" *ngIf="!editSecondaryAddress">
+              <p>{{accountDetail.secondaryAddressLine1}} {{accountDetail.secondaryAddressLine2}}</p>
+              <p>{{accountDetail.secondaryCity}}, {{accountDetail.secondaryState}}, {{accountDetail.secondaryZipcode}}
+              </p>
+            </div>
+            <div class="col-lg-4" *ngIf="editSecondaryAddress">
+              <div class="form-field-container">
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="AddressLine1" formControlName="secondaryAddressLine1" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="AddressLine2" formControlName="secondaryAddressLine2" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="AddressLine3" formControlName="secondaryAddressLine3" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="City" formControlName="secondaryCity" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="State" formControlName="secondaryState" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="Country" formControlName="secondaryCountry" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="Zipcode" formControlName="secondaryZipcode" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="!editSecondaryAddress">
+              <button mat-button color="primary" (click)="changeSecondaryAddress()">Change</button>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="editSecondaryAddress">
+              <button mat-button color="primary" (click)="savePersonalInfo()">Save</button>&nbsp;&nbsp;
+              <button mat-button color="primary" (click)="cancelPersonalInfo()">Cancel</button>
+            </div>
+          </div>
+          <div class="kt-form__group form-group row">
+            <label class="col-lg-3 col-form-label">Mailling Address:</label>
+            <div class="col-lg-4 example-container">
+              <div class="checkbox-section">
+                <mat-checkbox class="checkbox-margin" formControlName="isPrimaryMailingAddress">Use Primary Address
+                </mat-checkbox>
+                <!-- <mat-checkbox class="checkbox-margin" formControlName = "isSecondaryMailingAddress" disabled  ="true" >Use Seconday Address</mat-checkbox>  -->
+              </div>
+            </div>
+          </div>
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Home Phone</label>
+            <div class="col-lg-4" *ngIf="!editHomePhone">
+              <p>{{accountDetail.homePhone}}</p>
+            </div>
+            <div class="col-lg-4" *ngIf="editHomePhone">
+              <mat-form-field class="form-field-size">
+                <mat-icon matPrefix>local_phone</mat-icon>
+                <input matInput placeholder="Home Phone" formControlName="homePhone" />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="!editHomePhone">
+              <button mat-button color="primary" (click)="changeHomePhone()">Change</button>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="editHomePhone">
+              <button mat-button color="primary" (click)="savePersonalInfo()">Save</button>&nbsp;&nbsp;
+              <button mat-button color="primary" (click)="cancelPersonalInfo()">Cancel</button>
+            </div>
+          </div>
+
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Mobile Phone</label>
+            <div class="col-lg-4" *ngIf="!editMobilePhone">
+              <p>{{accountDetail.cellPhone}}</p>
+            </div>
+            <div class="col-lg-4" *ngIf="editMobilePhone">
+              <mat-form-field appearance="outline" class="form-field-size">
+                <mat-icon matPrefix>local_phone</mat-icon>
+                <input matInput placeholder="Mobile Phone" formControlName="cellPhone" />
+              </mat-form-field>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="!editMobilePhone">
+              <button mat-button color="primary" (click)="changeMobilePhone()">Change</button>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="editMobilePhone">
+              <button mat-button color="primary" (click)="savePersonalInfo()">Save</button>&nbsp;&nbsp;
+              <button mat-button color="primary" (click)="cancelPersonalInfo()">Cancel</button>
+            </div>
+          </div>
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Personal Email address:</label>
+            <div class="col-lg-4" *ngIf="!editPersonalEmail">
+              <p>{{accountDetail.emailAddress}}</p>
+            </div>
+            <div class="col-lg-4" *ngIf="editPersonalEmail">
+              <div class="form-field-container">
+                <mat-form-field appearance="outline" appearance="outline">
+                  <input matInput placeholder="Email address" formControlName="emailAddress" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="!editPersonalEmail">
+              <button mat-button color="primary" (click)="changePersonalEmail()">Change</button>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="editPersonalEmail">
+              <button mat-button color="primary" (click)="savePersonalInfo()">Save</button>&nbsp;&nbsp;
+              <button mat-button color="primary" (click)="cancelPersonalInfo()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="allExpandState" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title style="font-weight: bold; font-size: 16px">
+        Login and Security
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+
+    <form class="kt-form" [formGroup]="loginForm">
+      <div class="kt-portlet__body">
+        <div class="kt-form__section kt-form__section--first">
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Login Name:</label>
+            <div class="col-lg-4 example-container">
+              {{user?.loginName }}
+            </div>
+          </div>
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Alternate Login Name:</label>
+            <div class="col-lg-4 example-container" *ngIf="!editAlternateLoginName">
+              <p> {{user?.alternateLoginName}} </p>
+            </div>
+            <div class="col-lg-4 example-container" *ngIf="editAlternateLoginName">
+              <mat-form-field appearance="outline" class="form-field-size">
+                <input matInput placeholder="Alternate login name" formControlName="alternateLoginName">
+              </mat-form-field>
+            </div>
+            <div class="button-row">
+              <button mat-button color="primary" (click)="changeAlternateLoginName()"
+                *ngIf="!editAlternateLoginName">Change</button>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="editAlternateLoginName">
+              <button mat-button color="primary" (click)="saveLoginInfo()">Save</button>
+              <button mat-button color="primary" (click)="cancelLoginSecurity()">Cancel</button>
+            </div>
+          </div>
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Password:</label>
+            <div class="col-lg-4 example-container" *ngIf="!editPassword">
+              <p> *************************</p>
+            </div>
+            <div class="col-lg-4 example-container" *ngIf="editPassword">
+              <mat-form-field appearance="outline" class="form-field-size">
+                <input matInput type="password" placeholder="Enter current password" [(ngModel)]="passwordObj.password" [ngModelOptions]="{standalone: true}"
+                  autocomplete="off" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-field-size">
+                <input matInput type="password" placeholder="Enter new password" [(ngModel)]="passwordObj.newPassword"
+                  [ngModelOptions]="{standalone: true}" autocomplete="off" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-field-size">
+                <input matInput type="password" placeholder="Confirm new password"
+                  [(ngModel)]="passwordObj.confirmPassword" [ngModelOptions]="{standalone: true}" autocomplete="off" />
+              </mat-form-field>
+            </div>
+
+            <div class="button-row">
+              <button mat-button color="primary" (click)="changePassword()" *ngIf="!editPassword">Change</button>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="editPassword">
+              <button mat-button color="primary" (click)="saveLoginInfo()">Save</button>
+              <button mat-button color="primary" (click)="cancelLoginSecurity()">Cancel</button>
+            </div>
+          </div>
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Phone Number for MFA/OTP</label>
+            <div class="col-lg-4 example-container" *ngIf="!editPhoneNumberForMFA_OTP">
+              <p> {{user?.phoneNumberForMFA_OTP}} </p>
+            </div>
+            <div class="col-lg-4 example-container" *ngIf="editPhoneNumberForMFA_OTP">
+              <mat-form-field appearance="outline" class="form-field-size" >
+                <mat-icon matPrefix>local_phone</mat-icon>
+                <input matInput type="mobilePhone" matInput placeholder="Phone number"
+                  formControlName="phoneNumberForMFA_OTP">
+              </mat-form-field>
+            </div>
+            <div class="button-row">
+              <button mat-button color="primary" (click)="changePhoneNumberForMFA_OTP()"
+                *ngIf="!editPhoneNumberForMFA_OTP">Change</button>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="editPhoneNumberForMFA_OTP">
+              <button mat-button color="primary" (click)="saveLoginInfo()">Save</button>
+              <button mat-button color="primary" (click)="cancelLoginSecurity()">Cancel</button>
+            </div>
+          </div>
+          <div class="form-group kt-form__group row">
+            <label class="col-lg-3 col-form-label">Email Address for Account Recovery:</label>
+            <div class="col-lg-4 example-container" *ngIf="!editEmailAddressForRecovery">
+              <p> {{user?.emailAddressForRecovery}} </p>
+            </div>
+            <div class="col-lg-4 example-container" *ngIf="editEmailAddressForRecovery">
+              <mat-form-field appearance="outline" class="form-field-size">
+                <input matInput type="email" placeholder="Account recovery email"
+                  formControlName="emailAddressForRecovery">
+              </mat-form-field>
+            </div>
+            <div class="button-row">
+              <button mat-button color="primary" (click)="changeEmailAddressRecovery()"
+                *ngIf="!editEmailAddressForRecovery">Change</button>
+            </div>
+            <div class="col-lg-5 button-row" *ngIf="editEmailAddressForRecovery">
+              <button mat-button color="primary" (click)="saveLoginInfo()">Save</button>
+              <button mat-button color="primary" (click)="cancelLoginSecurity()">Cancel</button>
+            </div>
+          </div>
+
+          <div class="form-group kt-form__group row">                                 
+            <label class="col-lg-3 col-form-label"><strong>Security Questions: </strong></label>                                      
+            <table style="width: 20%; ">
+                <tr><br/><br/></tr>
+                <div *ngIf="!editSecurityQuestion">
+                  <span  *ngFor="let q of securityQuestions" >
+                      <tr><label>{{q.question}}</label></tr>                                      
+                      <!-- <tr><input matInput value="{{q.answer}}" readonly></tr> -->
+                  </span>
+                </div>
+                <div *ngIf="editSecurityQuestion" formArrayName="securityQues">
+                  
+                    <tr class="col-lg-1 example-container" *ngFor="let count of securityQuestions; index as i">
+                      <td >
+                          <mat-form-field>
+                              <mat-select placeholder="Security Questions" required >
+                                <mat-option></mat-option>
+                                <mat-option *ngFor="let q of listOfSecurityQuestions" [value]="q.questionId">{{q.question}}</mat-option>                                
+                              </mat-select>
+                                                        
+                            </mat-form-field>    
+                            <input matInput placeholder="Enter your answer " >                          
+                        </td>
+                        
+                    </tr>
+                  
+                </div>
+
+
+              </table>  
+              <div style="width: 13.3%;"></div>             
+              <div class="button-row">
+                <button mat-button color="primary" (click)="changeSecurityQuestion()"
+                  *ngIf="!editSecurityQuestion">Change</button>
+              </div>
+              <div class="col-lg-5 button-row" *ngIf="editSecurityQuestion">
+                <button mat-button color="primary" (click)="saveSecurityQuestion()">Save</button>
+                <button mat-button color="primary" (click)="cancelSecurityQuestion()">Cancel</button>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </form>
+  </mat-expansion-panel>
+  <mat-expansion-panel  [expanded]="allExpandState" (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngFor="let persona of personas" >
+      <mat-expansion-panel-header>
+          <mat-panel-title style="font-weight: bold; font-size: 16px">
+              Digital Persona - {{persona.personType}}
+          </mat-panel-title>      
+       </mat-expansion-panel-header>
+       <form class="kt-form" [formGroup]="loginForm">
+          <div class="kt-portlet__body">
+            <div class="kt-form__section kt-form__section--first">
+              <div class="form-group kt-form__group row">
+                <label class="col-lg-3 col-form-label">Persona Type:</label>
+                <div class="col-lg-4 example-container">                                 
+                    {{persona.personType}}
+                </div>               
+              </div>
+              <div class="form-group kt-form__group row">
+                  <label class="col-lg-3 col-form-label">Credential Information:</label>
+                  <div class="col-lg-4 example-container">                                 
+                      {{persona.credentialInfo[0].accounType}}
+                   
+                  
+                  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+                      <!-- This is the tree node template for leaf nodes -->
+                      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                        <li class="mat-tree-node">
+                          <!-- use a disabled button to provide padding for tree leaf -->
+                          <!-- <button mat-icon-button disabled></button> -->
+                          {{node.name}}
+                        </li>
+                      </mat-tree-node>
+                      <!-- This is the tree node template for expandable nodes -->
+                      <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                       <span *ngIf="persona.personType == node.personType">    
+                        <li>
+                          <div class="mat-tree-node">
+                            <button mat-icon-button matTreeNodeToggle
+                                    [attr.aria-label]="'toggle ' + node.name">
+                              <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                              </mat-icon>
+                            </button>
+                            {{node.name}}
+                          </div>
+                          <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                            <ng-container matTreeNodeOutlet></ng-container>
+                          </ul>
+                        </li>
+                        </span>
+                      </mat-nested-tree-node>
+                    </mat-tree>
+                  </div> 
+                </div>
+                <div class="form-group kt-form__group row">
+                    <label class="col-lg-3 col-form-label"><strong>Organization Information:</strong></label>
+                    
+                    <table style="width: 35%;">
+                        <tr><br/><br/></tr>
+                        <tr>
+                          <td><strong>Job Title : </strong></td>
+                          <td> {{persona.orgInfo.jobTitle}} </td>
+                        </tr><tr>
+                          <td> <strong>Work Email Address : </strong></td>
+                           <td>{{persona.orgInfo.workEmailAddress}} </td>
+                          </tr><tr>
+                           <td><strong>Primary Affiliation/Department :</strong></td>
+                           <td>{{persona.orgInfo.department}} </td>
+                          </tr><tr>
+                              <td><strong> Manager Name :</strong></td>
+                              <td>{{persona.orgInfo.managerName}} </td>
+                             </tr> <tr>
+                              <td><strong>Office Address : </strong></td>
+                              <td>{{persona.orgInfo.officeAddress}} </td>
+                          </tr>
+                      </table>     
+                    
+                    
+                    <!-- <div class="col-lg-4 example-container">  
+                        <label class="col-lg-3 col-form-label">Job Title : </label>       
+                        <div>  
+                            <label class="col-lg-4 col-form-label"> </label>     
+                        </div>
+                        <div class="col-lg-12 example-container">  
+                              
+                        </div>
+                        <div class="col-lg-4 example-container">  
+                            Manager Name :  {{persona.orgInfo.managerName}}  
+                        </div>
+                        <div>  
+                           Office Address :   {{persona.orgInfo.officeAddress}}  
+                        </div>
+
+                    </div>
+                    -->
+                    
+                    
+                </div>
+
+
+            </div>
+            </div>
+            </form>
+
+   
+    </mat-expansion-panel>
+ 
+
+
+</mat-accordion>

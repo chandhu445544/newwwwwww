@@ -1,0 +1,34 @@
+export class PersonalInfo {
+     id:number;
+	  suffix: string;
+	   firstName: string;
+	   middleName: string;
+	   lastName: string;
+	   gender: string;
+	   dateOfBirth: string;
+	   cellPhone: string;
+	   facialTokenImage :any;
+	   nationalIdentityNumber1: string;
+	   nationalIdentityNumber2: string;
+	   homePhone: string;
+	   primaryAddressLine1: string;
+	   primaryAddressLine2: string;
+	   primaryAddressLine3: string;
+	   primaryCity: string;
+	   primaryCounty: string;
+	   primaryState: string;
+	   primaryCountry: string;
+	   primaryZipcode: string;
+	   secondaryAddressLine1: string;
+	   secondaryAddressLine2: string;
+	   secondaryAddressLine3: string;
+	   secondaryCity: string;
+	   secondaryCounty: string;
+	   secondaryState: string;
+	   secondaryCountry: string;
+	   secondaryZipcode: string;
+	   isPrimaryMailingAddress: boolean;
+	   externalId1: string;
+	   externalId2: string;
+	   emailAddress: string;
+}

@@ -1,0 +1,27 @@
+// import one of the base demo style (default)
+@import "../../../../assets/demo/default/base/style.bundle.css";
+// import login css
+@import "../../../../assets/app/custom/login/login-v1.default.css";
+
+kt-auth, .kt-login {
+	height: 100%;
+
+	.mat-form-field {
+		width: 100%;
+	}
+
+	// add extra right padding when displaying spinner in button
+	.kt-spinner {
+		padding-right: 3rem !important;
+	}
+	.fieldset { 
+		display: block;
+		margin-left: 2px;
+		margin-right: 2px;
+		padding-top: 0.35em;
+		padding-bottom: 0.625em;
+		padding-left: 0.75em;
+		padding-right: 0.75em;
+		border: 2px groove (internal value);
+	  }
+}
